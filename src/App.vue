@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img width="25%" src="./assets/logo.png">
-    <HelloWorld/>
+    <div>
+          <input type="text" v-model="inputTitle">
+          <button @click="addItem">追加</button>
+      </div>
+      <ul>
+          <item v-for="(item, index) in items" :item="item" :key="index"></item>
+      </ul>
+      
   </div>
 </template>
-
 <script>
-import HelloWorld from "./components/HelloWorld";
-
+import Item from "./Item.vue";
 export default {
-  name: "App",
-  components: {
-    HelloWorld
+  name: "app",
+  components: { Item },
+  data() {
+    const items = [];
+    for (var i = 0; i < 1750; i++) {
+      items.push({ is_do: false, title: "タスク" + i });
+    }
+    return {
+      inputTitle: "",
+      items: items
+    };
+  },
+  methods: {
+    addItem() {
+      this.items.push({
+        title: this.inputTitle,
+        is_do: false
+      });
+    }
   }
 };
 </script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
